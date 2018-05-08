@@ -1,0 +1,52 @@
+<% if action == :edit %>
+<h1>Edit your cat</h1>
+<% else %>
+<h1>Create new cat</h1>
+<% end %>
+<form class="" action="<%= action == :edit ? cat_url(cat) : cats_url%>" method="post">
+  <% if action == :edit %>
+  <input type="hidden" name="_method" value="PATCH">
+  <% end %>
+  <label for="name"> Name
+    <input type="text" name="cat[name]" value="<%=action == :edit ? cat.name : ''%>">
+  </label>
+  <br>
+  <label for="sex"> Sex
+    <% if action == :edit %>
+      <% if cat.sex == 'M' %>
+          <input type="radio" id="Mchoice" name="cat[sex]" value="M" checked>
+          <label for="Mchoice">Male</label>
+          <input type="radio" id="Fchoice" name="cat[sex]" value="F">
+          <label for="Fchoice">Female</label>
+      <% else %>
+          <input type="radio" id="Mchoice" name="cat[sex]" value="M">
+          <label for="Mchoice">Male</label>
+          <input type="radio" id="Fchoice" name="cat[sex]" value="F" checked>
+          <label for="Fchoice">Female</label>
+      <% end %>
+    <% else %>
+          <input type="radio" id="Mchoice" name="cat[sex]" value="M" >
+          <label for="Mchoice">Male</label>
+          <input type="radio" id="Fchoice" name="cat[sex]" value="F">
+          <label for="Fchoice">Female</label>
+    <% end %>
+
+  </label>
+  <select name="cat[color]" for="color">
+    <option disabled <%= cat.color ? "" : "selected"%>>-- Please Select --</option>
+    <option  value="Black" <%= cat.color == "Black" ? "selected" : ""%>>Black</option>
+    <option  value="White" <%= cat.color == "White" ? "selected" : ""%>>White</option>
+    <option  value="Orange" <%= cat.color == "Orange" ? "selected" : ""%>>Orange</option>
+    <option  value="Grey" <%= cat.color == "Grey" ? "selected" : ""%>>Grey</option>
+  </select>
+
+  <label for="birth_date"> Birth Date
+    <input type="date" name="cat[birth_date]" value="<%= cat.birth_date %>">
+  </label>
+
+  <label for="name">Description
+    <textarea name="cat[description]" values=""> <%= cat.description %></textarea>
+  </label>
+  <input type="submit" value="Submit Changes!">
+
+</form>
